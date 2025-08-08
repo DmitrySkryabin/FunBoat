@@ -21,15 +21,21 @@ class FunBoat:
             self.speed = 0
         self.LOG.info(f'Speed updated: {self.speed}')
         
+    def __update_song_power(self):
+        self.song_power = self.rowers * 50 # Примерные герцы
+        self.LOG.info(f'Song power updated: {self.song_power}')
+        
     def add_rowers(self, count_of_rowers):
         if self.rowers + count_of_rowers > self.BOAT_CAPACITY:
             raise ValueError('To many rowers')
         self.rowers += count_of_rowers
+        self.__update_song_power()
         
     def remove_rowers(self, count_of_rowers):
         if self.rowers - count_of_rowers < 0:
             raise ValueError('Cant remove more rowers than you have')
         self.rowers -= count_of_rowers
+        self.__update_song_power()
         
     def start_rowing(self):
         if self.rowers == 0:
@@ -64,7 +70,7 @@ class FunBoat:
         '''
         if self.rowers == 0:
             raise RuntimeError('No one to sing songs ')
-        self.song_power = self.rowers * 50 # Примерные герцы
+        self.__update_song_power()
         self.LOG.info(f'Yo, Ho haul together, hoist the colours high...')
         
     def stop_funning(self):
